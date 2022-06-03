@@ -6,5 +6,11 @@
     &lt;TestId&gt;MSTest::4B86986B-4EA0-4683-AE1B-57E4D6091DF1::.NETFramework,Version=v4.7.2::ProiectTestare.Tests.DiaryTests.AddAddress&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::4B86986B-4EA0-4683-AE1B-57E4D6091DF1::.NETFramework,Version=v4.7.2::ProiectTestare.Tests.RegisterTests.UserShouldNotRegisterSuccessfullyWhenPasswordsDoNotMatch&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;MSTest::4B86986B-4EA0-4683-AE1B-57E4D6091DF1::.NETFramework,Version=v4.7.2::ProiectTestare.Tests.DiaryTests.AddNewExerciseSuccessfully&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::4B86986B-4EA0-4683-AE1B-57E4D6091DF1::.NETFramework,Version=v4.7.2::ProiectTestare.Tests.RegisterTests.UserShouldRegisterSuccessfully&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::4B86986B-4EA0-4683-AE1B-57E4D6091DF1::.NETFramework,Version=v4.7.2::ProiectTestare.Tests.DiaryTests.AddNewFoodToDiarySuccessfully&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::4B86986B-4EA0-4683-AE1B-57E4D6091DF1::.NETFramework,Version=v4.7.2::ProiectTestare.Tests.SettingsTests.UserShouldLoginSuccessfully&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::4B86986B-4EA0-4683-AE1B-57E4D6091DF1::.NETFramework,Version=v4.7.2::ProiectTestare.Tests.SettingsTests.UpdateBirthdayInProfileSuccessfully&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::4B86986B-4EA0-4683-AE1B-57E4D6091DF1::.NETFramework,Version=v4.7.2::ProiectTestare.Tests.SettingsTests.UpdateBirthdayInProfileSettingsSuccessfully&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;MSTest::4B86986B-4EA0-4683-AE1B-57E4D6091DF1::.NETFramework,Version=v4.7.2::ProiectTestare.Tests.SettingsTests.UpdateCurrentWeightInProfileSuccessfully&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

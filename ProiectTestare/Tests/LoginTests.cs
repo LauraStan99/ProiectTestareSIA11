@@ -1,10 +1,9 @@
-﻿using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
-using OpenQA.Selenium.Support.UI;
 using ProiectTestare.PageObjects.Login;
+using ProiectTestare.PageObjects.Shared.MenuController;
 using ProiectTestare.Tests.Shared;
 
 namespace ProiectTestare.Tests
@@ -22,9 +21,9 @@ namespace ProiectTestare.Tests
             _driver = new ChromeDriver();
             _driver.Manage().Window.Maximize();
             _driver.Navigate().GoToUrl("https://cronometer.com/");
-            _driver.FindElement(by: By.XPath("/html/body/div[1]/div[1]/div[1]/div[2]/div")).Click();
-            Thread.Sleep(2000);
-            _loginPage = new LoginPage(_driver);
+         
+            var menu = new LoggedOutMenuController(_driver);
+            _loginPage = menu.NavigateToLoginPage();
         }
 
         [TestCleanup]

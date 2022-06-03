@@ -18,5 +18,19 @@ namespace ProiectTestare.Tests.Shared
                 Weight = "57"
             };
         }
+
+        public static NewAccountBo ValidAccount()
+        {
+            return new NewAccountBo
+            {
+                Password = "something123456",
+                ConfirmPassword = "something123456",
+                Gender = GenderEnum.Female,
+                BirthdayDay = "28",
+                BirthdayMonth = MonthEnum.August,
+                BirthdayYear = "1999",
+                Weight = "57"
+            };
+        }
     }
 }

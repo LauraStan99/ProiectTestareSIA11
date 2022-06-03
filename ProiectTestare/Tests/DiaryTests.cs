@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
 using ProiectTestare.PageObjects.Home;
 using ProiectTestare.PageObjects.Login;
+using ProiectTestare.PageObjects.Shared.MenuController;
 using ProiectTestare.Tests.Shared;
+using ProiectTestare.Utils;
 
 namespace ProiectTestare.Tests
 {
@@ -17,6 +16,11 @@ namespace ProiectTestare.Tests
         private LoginPage _loginPage;
         private HomePage _homePage;
 
+        private By TableActivityMonitoring =>
+            By.XPath("/html/body/div[1]/div[4]/div[2]/div[1]/div/table/tbody/tr/td[2]/div/div[2]/table");
+
+        IWebElement Table => _driver.FindElement(TableActivityMonitoring);
+
 
         [TestInitialize]
         public void TestSetup()
@@ -26,11 +30,11 @@ namespace ProiectTestare.Tests
             _driver.Manage().Window.Maximize();
             _driver.Navigate().GoToUrl("https://cronometer.com/");
 
-            _driver.FindElement(by: By.XPath("/html/body/div[1]/div[1]/div[1]/div[2]/div")).Click();
-
-            Thread.Sleep(2000);
-            _loginPage = new LoginPage(_driver);
+            var menu = new LoggedOutMenuController(_driver);
+            _loginPage = menu.NavigateToLoginPage();
             _loginPage.LoginWith("laurastan1999@gmail.com", "Laura123456789");
+
+            _homePage = new HomePage(_driver);
         }
 
         [TestCleanup]
@@ -42,15 +46,11 @@ namespace ProiectTestare.Tests
         [TestMethod]
         public void AddNewFoodToDiarySuccessfully()
         {
-            Thread.Sleep(3000);
-            _homePage = new HomePage(_driver);
-            _homePage.AddFoodToDiary("500", "g");
+            _homePage.AddFoodToDiary("500");
 
-            // verify if a new food (row) has been added to the table
-            IWebElement table =
-                _driver.FindElement(
-                    By.XPath("/html/body/div[1]/div[4]/div[2]/div[1]/div/table/tbody/tr/td[2]/div/div[2]/table"));
-            int numberOfRowsInTable = table.FindElements(By.TagName("tr")).Count;
+            // verify if a new food (row) has been added to the activity monitoring table
+            _driver.WaitForElement(TableActivityMonitoring);
+            int numberOfRowsInTable = Table.FindElements(By.TagName("tr")).Count;
 
             Assert.IsTrue(numberOfRowsInTable > 0);
         }
@@ -58,14 +58,23 @@ namespace ProiectTestare.Tests
         [TestMethod]
         public void AddNewExerciseSuccessfully()
         {
-            Thread.Sleep(3000);
-            _homePage = new HomePage(_driver);
             _homePage.AddEcerciseToDiary(ExercisesFactory.ValidExercise());
 
-            IWebElement table =
-                _driver.FindElement(
-                    By.XPath("/html/body/div[1]/div[4]/div[2]/div[1]/div/table/tbody/tr/td[2]/div/div[2]/table"));
-            int numberOfRowsInTable = table.FindElements(By.TagName("tr")).Count;
+            // verify if a new food (row) has been added to the activity monitoring table
+            _driver.WaitForElement(TableActivityMonitoring);
+            int numberOfRowsInTable = Table.FindElements(By.TagName("tr")).Count;
+
+            Assert.IsTrue(numberOfRowsInTable > 0);
+        }
+
+        [TestMethod]
+        public void AddNewNoteSuccessfully()
+        {
+            _homePage.AddNoteToDiary("some text for note");
+
+            // verify if a new food (row) has been added to the activity monitoring table
+            _driver.WaitForElement(TableActivityMonitoring);
+            int numberOfRowsInTable = Table.FindElements(By.TagName("tr")).Count;
 
             Assert.IsTrue(numberOfRowsInTable > 0);
         }

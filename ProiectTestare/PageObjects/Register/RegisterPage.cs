@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using ProiectTestare.PageObjects.Register.InputData;
+using ProiectTestare.Utils;
 
 namespace ProiectTestare.PageObjects.Register
 {
@@ -17,6 +18,17 @@ namespace ProiectTestare.PageObjects.Register
         private IWebElement BtnCreateAccount => _driver.FindElement(By.Id("createaccount"));
         public IWebElement ValidationErrorMessage => _driver.FindElement(By.XPath("/html/body/div[2]/div[2]/form/div[1]"));
 
+        private By ConfirmationEmailPage => By.XPath("/html/body/div[1]/div[4]/div/div[2]/div/h2");
+        private IWebElement LblConfirmationEmailPage =>
+            _driver.FindElement(ConfirmationEmailPage);
+        public string ConfirmationEmailText
+        {
+            get
+            {
+                _driver.WaitForElement(ConfirmationEmailPage, 30);
+                return LblConfirmationEmailPage.Text;
+            }
+        }
         public RegisterPage(IWebDriver browser)
         {
             _driver = browser;

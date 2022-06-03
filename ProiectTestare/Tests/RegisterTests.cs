@@ -1,14 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using ProiectTestare.PageObjects.Login;
 using ProiectTestare.PageObjects.Register;
+using ProiectTestare.PageObjects.Shared.MenuController;
 using ProiectTestare.Tests.Shared;
 
 namespace ProiectTestare.Tests
@@ -18,15 +13,19 @@ namespace ProiectTestare.Tests
     {
         private IWebDriver _driver;
         private RegisterPage _registerPage;
+        private Random rand;
 
-        public RegisterTests()
+
+        [TestInitialize]
+        public void StartUp()
         {
             _driver = new ChromeDriver();
             _driver.Manage().Window.Maximize();
             _driver.Navigate().GoToUrl("https://cronometer.com/");
-            _driver.FindElement(by: By.XPath("//*[@id='hero']/div/div/div[1]/div/a")).Click();
-            Thread.Sleep(2000);
-            _registerPage = new RegisterPage(_driver);
+
+            var menu = new LoggedOutMenuController(_driver);
+            _registerPage = menu.NavigateToRegisterPage();
+            rand = new Random();
         }
 
         [TestCleanup]
@@ -40,8 +39,20 @@ namespace ProiectTestare.Tests
         public void UserShouldNotRegisterSuccessfullyWhenPasswordsDoNotMatch()
         {
             _registerPage.RegisterWith(AccountFactory.InvalidAccount());
-            //Assert
+
             Assert.AreEqual(Constants.RegisterFailedErrorMessage, _registerPage.ValidationErrorMessage.Text);
+        }
+
+
+        [TestMethod]
+        [TestCategory("Smoke")]
+        public void UserShouldRegisterSuccessfully()
+        {
+            var validAccount = AccountFactory.ValidAccount();
+            validAccount.Email=  $"{rand.Next(1000, 1500)}@gmail.com";
+            _registerPage.RegisterWith(validAccount);
+
+            Assert.AreEqual(Constants.ConfirmationEmailMessage, _registerPage.ConfirmationEmailText);
         }
     }
 }
